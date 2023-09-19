@@ -1,0 +1,100 @@
+{% extends 'artyweb/base.html' %}
+{% block content %}
+<main>
+    <style>
+        .dep-post .dep-content img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            object-position: center;
+        }
+    </style> <br><br><br>
+    <section>
+        <div class="dep">
+            <div class="container">
+                {% if user.is_authenticated and user.is_superuser %}
+                <!-------------------------------- AJOUTER ----------------------------------->
+                <div class="col-auto">
+                    <center><a href="{% url 'ajouter_formation2' %}" class="btn btn-primary float-end"><i
+                                class="fa-solid fa-file-circle-plus fa-2xl"></i></a></center>
+                </div>
+                {% endif %}
+                <div class="owl-carousel owl-theme dep-post">
+                    <!----------------------------- AFFICHER -------------------------------->
+                    {% for formation in formations %}
+                    <div class="dep-content" data-aos-delay="200">
+                        <img src="{{ formation.photo.url }}">
+                        <div class="dep-title">
+                            <h3>{{ formation.nom }}</h3><br>
+                            <h3>{{ formation.datedebut }} - {{ formation.datefin }}</h3><br>
+                            {% if formation.prix %}
+                            <h3>Prix: {{ formation.prix }} DT</h3>
+                            {% endif %}
+                            <h3>{{ formation.formateur }}</h3>
+                            <br>
+
+                            <div class="col-auto" data-aos="fade-up" data-aos-delay="100">
+                                <form method="POST" action="{% url 'ajouter_au_panier' formation.id %}">
+                                    {% csrf_token %}
+                                    <button class="btn btn-dep">
+                                        Acheter
+                                    </button>
+                                </form>
+                            </div>
+                            {% if user.is_authenticated and user.is_superuser %}
+                            <!---------------------- MODIFIER ------------------------------>
+                            <div class="col-auto" data-aos="fade-up" data-aos-delay="100">
+                                <a href="{% url 'modifier_formation2' formation.id %}" class="btn btn-primary">
+                                    <button type="submit" class="btn btn-alert">
+                                        <i class="fa-solid fa-edit fa-xl"></i></button>
+                                </a>
+                            </div> <br>
+                            <!----------------------------- DELETE --------------------------->
+                            <div class="col-auto" data-aos="fade-up" data-aos-delay="100">
+                                <form method="POST" action="{% url 'supprimer_formation2' formation.id %}">
+                                    {% csrf_token %}
+                                    <button type="button" class="btn btn-danger"
+                                        onclick="confirmDelete('{{ formation.nom }}', this.form)"><i
+                                            class="fa-solid fa-trash fa-xl"></i></button>
+                                </form>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    {% endfor %}
+
+
+                </div>
+                <div class="owl-navigation">
+                    <span class="owl-nav-prev"><i class="fas fa-long-arrow-alt-left"></i></span>
+                    <span class="owl-nav-next"><i class="fas fa-long-arrow-alt-right"></i></span>
+                </div>
+            </div>
+        </div>
+    </section> <br><br><br>
+</main>
+<br><br><br><br><br><br><br><br><br><br>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    function confirmDelete(nom, form) {
+        Swal.fire({
+            title: 'Êtes-vous sûr?',
+            text: "Vous ne pourrez pas annuler cette action!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Oui, supprimez-le!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                form.submit();
+                Swal.fire(
+                    'Supprimé!',
+                    'Le service a été supprimé.',
+                    'success'
+                )
+            }
+        })
+    }
+</script>
+{% endblock %}

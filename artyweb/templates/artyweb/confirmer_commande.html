@@ -1,0 +1,13 @@
+{% extends 'artyweb/base.html' %}
+
+{% block content %}
+<div id="butt" style="text-align: center;">
+    <h1>Confirmer la commande</h1>
+    <p>Le montant total de votre commande est de {{ total }} DT.</p>
+
+    <script src="https://www.paypal.com/sdk/js?client-id=test"></script>
+    <script>paypal.Buttons().render('#butt');</script>
+</div>
+
+
+{% endblock %}

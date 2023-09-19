@@ -1,0 +1,190 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>
+        {% block title %} ARTYPROD {% endblock %}
+    </title>
+    {% block styles %}
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="{% static 'css/all.css'%}">
+    <!-- --------- Owl-Carousel ------------------->
+    <link rel="stylesheet" href="{% static 'css/owl.carousel.min.css'%}">
+    <link rel="stylesheet" href="{% static 'css/owl.theme.default.min.css'%}">
+
+    <!-- ------------ AOS Library ------------------------- -->
+    <link rel="stylesheet" href="{% static 'css/aos.css'%}">
+
+    <!-- Custom Style   -->
+    <link rel="stylesheet" href="{% static 'css/Style.css'%}">
+
+    <link rel="shortcut icon" href="{% static 'img/logo2.png'%}">
+
+    {% endblock %}
+
+</head>
+
+<body>
+
+
+    <nav class="nav">
+        <div class="nav-menu flex-row">
+            <div class="nav-brand">
+                <img src="{% static 'img/lg2.png'%}" class="nav-image">
+            </div>
+            <div class="toggle-collapse">
+                <div class="toggle-icons">
+                    <i class="fas fa-bars"></i>
+                </div>
+            </div>
+            <div>
+                <ul class="nav-items">
+                    <li class="nav-link">
+                        <a href="{% url 'projet' %}">Portfolio<span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-link">
+                        <a href="{% url 'service' %}">Nos Services</a>
+                    </li>
+                    <li class="nav-link">
+                        <a href="{% url 'equipe' %}">Nos Equipes</a>
+                    </li>
+
+                    <li class="nav-link">
+                        <a href="{% url 'all_formations' %}">Nos Formations</a>
+                    </li>
+
+                    {% if user.is_authenticated and not user.is_superuser and not user.is_staff %}
+                    <li class="nav-link">
+                        <a href="{% url 'panier' %}" class="btn btn-primary"><i class="fa-solid fa-shopping-cart"></i>
+                            Panier <span class="badge bg-primary ">{{ panier.formations.count }}</span></a>
+                    </li>
+                    {% endif %}
+
+                    {% if user.is_active and not user.is_staff %}
+                    <li class="nav-link">
+                        <a href="{% url 'demande_projet_list' %}">Mes Projets</a>
+                    </li>
+                    {% endif %}
+
+                    {% if user.is_superuser %}
+                    <li class="nav-link">
+                        <a href="{% url 'demande_projet_list' %}">Liste Projets Demander</a>
+                    </li>
+                    {% endif %}
+
+                    {% if user.is_staff and not user.is_superuser %}
+                    <li class="nav-link">
+                        <a href="{% url 'demande_projet_list' %}">Tâches réalisées</a>
+                    </li>
+                    {% endif %}
+
+                    {% if not user.is_superuser and not user.is_staff %}
+                    <li class="nav-link">
+                        <a href="{% url 'contact' %}">Contact</a>
+                    </li>
+                    {% endif %}
+                    {% if user.is_authenticated and user.is_superuser %}
+                    <li class="nav-link">
+                        <a href="{% url 'admin:index' %}">Administration</a>
+                    </li>
+                    {% endif %}
+
+                </ul>
+            </div>
+            <div class="social text-gray">
+                <a href="https://www.facebook.com/isetsf/"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-youtube"></i></a>
+            </div>
+        </div>
+    </nav>
+    <!------------------------ Site Title ---------------------->
+    <main>
+        <section class="site-title">
+            <div class="site-background" data-aos="fade-up" data-aos-delay="100">
+                <h1>Welcome to ArtyProd WebSite </h1><br>
+                {% if user.is_authenticated %}
+                <button class="btn"><a href="#">{{user}}</a></button>
+                <button class="btn"><a href="{% url 'logout' %}">LOGOUT</a></button>
+                {% else %}
+                <button class="btn"><a href="{% url 'login' %}">LOGIN</a></button>
+                <button class="btn"><a href="{% url 'register' %}">REGISTER</a></button>
+                {% endif %}
+            </div>
+        </section>
+
+
+        <!------------x----------- Site Title ----------x----------->
+
+        {% block content %}
+    </main>
+    {% endblock %}
+
+    <footer class="footer">
+        <div class="container">
+            <div class="about-us" data-aos="fade-right" data-aos-delay="200">
+                <img src="{% static 'img/lg2.png'%}" id="image" data-aos="fade-left" data-aos-delay="200">
+                <p class="p2">Welcome to ArtyProd WebSite</p>
+            </div>
+            <div class="contact-us" data-aos="fade-left" data-aos-delay="200">
+                <h2>Contact Us</h2>
+                <p><i class="fa fa-map-marker"></i> adress : Route de Lafrane Km 2.5 Sfax<br>
+                    <br><i class="fa fa-envelope"></i> Email : contact@artyprod.com<br>
+                    <br><i class="fa fa-mobile"></i> Tél : (+216)44 374 437<br>
+                    <br><i class="fa fa-mobile"></i> Fax : (+216)74 431 386
+                </p>
+            </div>
+
+            <div class="newsletter" data-aos="fade-right" data-aos-delay="200">
+                <h2>Newsletter</h2>
+                <p>Stay update with our latest</p>
+                <div class="form-element">
+                    <input type="text" placeholder="Email"><span><i class="fas fa-chevron-right"></i></span>
+                </div>
+            </div>
+
+            <div class="follow" data-aos="fade-left" data-aos-delay="200">
+                <h2>Follow us</h2>
+                <p>Let us be Social</p>
+                <div>
+                    <a href="https://www.facebook.com/isetsf/"> <i class="fab fa-facebook-f"></i></a>
+                    <i class="fab fa-twitter"></i>
+                    <i class="fab fa-instagram"></i>
+                    <i class="fab fa-youtube"></i>
+                </div>
+
+            </div>
+        </div>
+        <div class="rights flex-row">
+            <h4 class="text-gray">
+                Copyright ©2023 All rights reserved | made by Azouz Mtibaa & Akram Hamdi
+
+            </h4>
+        </div>
+        <div class="move-up">
+            <span><i class="fas fa-arrow-circle-up fa-2x"></i></span>
+        </div>
+    </footer>
+    <!-- Jquery Library file -->
+    <script type="text/javascript" src="{% static 'js/Jquery3.4.1.min.js' %}"></script>
+
+    <!-- --------- Owl-Carousel js ------------------->
+    <script type="text/javascript" src="{% static 'js/owl.carousel.min.js' %}"></script>
+
+
+    <!-- ------------ AOS js Library  ------------------------- -->
+    <script type="text/javascript" src="{% static 'js/aos.js' %}"></script>
+
+
+    <!-- Custom Javascript file -->
+    <script type="text/javascript" src="{% static 'js/main.js' %}"></script>
+    <!------------------------------ icon service ----------------------->
+    <script src="https://kit.fontawesome.com/2d9d991c8a.js" crossorigin="anonymous"></script>
+
+</body>
+
+</html>

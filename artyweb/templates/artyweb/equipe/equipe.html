@@ -1,0 +1,82 @@
+{% extends 'artyweb/base.html' %}
+{% block title %} Equipe {% endblock %}
+{% load static %}
+{% block content %}
+<section>
+  <center>
+    <h1>Nos Equipe </h1>
+  </center>
+  <div class="dep">
+    <div class="container">
+      <!---------------------- AJOUTER ------------------------->
+      {% if user.is_authenticated and user.is_superuser %}
+      <div class="col-auto">
+        <center><a href="{% url 'add_equipe' %}" class="btn btn-primary float-end"><i
+              class="fa-solid fa-file-circle-plus fa-2xl"></i></a></center>
+      </div>
+      {% endif %}
+      <div class="owl-carousel owl-theme dep-post">
+        {% for equipes in equipe %}
+        <!---------------------- AFFICHER ------------------------->
+        <div class="dep-content" data-aos="fade-right" data-aos-delay="200">
+          <img src="{{ equipes.image.url }}" alt="">
+          <div class="dep-title">
+            <h3>{{ equipes.nom }}</h3>
+            <br>
+            <button class="btn btn-dep"><a href="{% url 'personnel' equipes.id %}"><i
+                  class="fa-solid fa-eye fa-xl"></i>Voir personnel
+              </a></button><br>
+          </div>
+          {% if user.is_authenticated and user.is_superuser %}
+          <!---------------------- MODIFIER ------------------------->
+          <div class="col-auto" data-aos="fade-up" data-aos-delay="100">
+            <a href="{% url 'edit_equipe' equipes.id %}" class="btn btn-primary">
+              <button type="submit" class="btn btn-alert">
+                <i class="fa-solid fa-edit fa-xl"></i></button>
+            </a>
+          </div>
+          <br>
+          <!---------------------- DELETE ------------------------->
+          <div class="col-auto" data-aos="fade-up" data-aos-delay="100">
+            <form method="POST" action="{% url 'delete_equipe' equipes.id %}">
+              {% csrf_token %}
+              <button type="button" class="btn btn-danger" onclick="confirmDelete('{{ equipes.nom }}', this.form)"><i
+                  class="fa-solid fa-trash fa-xl"></i></button>
+            </form>
+          </div><br>
+          {% endif %}
+        </div>
+        {% endfor %}
+      </div>
+      <div class="owl-navigation">
+        <span class="owl-nav-prev"><i class="fas fa-long-arrow-alt-left"></i></span>
+        <span class="owl-nav-next"><i class="fas fa-long-arrow-alt-right"></i></span>
+      </div>
+    </div>
+  </div>
+</section>
+<br><br>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    function confirmDelete(nom, form) {
+        Swal.fire({
+            title: 'Êtes-vous sûr?',
+            text: "Vous ne pourrez pas annuler cette action!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Oui, supprimez-le!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                form.submit();
+                Swal.fire(
+                    'Supprimé!',
+                    'Le service a été supprimé.',
+                    'success'
+                )
+            }
+        })
+    }
+</script>
+{% endblock %}

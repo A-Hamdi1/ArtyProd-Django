@@ -1,0 +1,90 @@
+{% extends 'artyweb/base.html' %}
+
+{% block content %}
+<main><br><br>
+    <center>
+        <section>
+            <style>
+                table {
+                    border-collapse: collapse;
+                    width: 100%;
+                    max-width: 800px;
+                    margin: 0 auto;
+                }
+
+                th,
+                td {
+                    padding: 12px;
+                    text-align: left;
+                }
+
+                th {
+                    background-color: #f2f2f2;
+                    font-weight: bold;
+                }
+
+                tr:nth-child(even) {
+                    background-color: #f2f2f2;
+                }
+
+                button {
+                    background-color: #f44336;
+                    color: white;
+                    padding: 8px 16px;
+                    border: none;
+                    border-radius: 4px;
+                    cursor: pointer;
+                    transition: background-color 0.3s ease;
+                }
+
+                button:hover {
+                    background-color: #d32f2f;
+                }
+            </style>
+            <h1>Votre Panier</h1>
+
+            {% if panier %}
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Formation :</th>
+                        <th>Prix :</th>
+                        <th>Action :</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for formation in panier.formations.all %}
+                    <tr>
+                        <td>{{ formation.nom }}</td>
+                        <td>{{ formation.prix }}DT</td>
+                        <td>
+                            <form method="post" action="{% url 'supprimer_formation_panier' formation.id %}">
+                                {% csrf_token %}
+                                <button type="submit"><i class="fa-solid fa-trash fa-xl"></i></button>
+                            </form>
+                        </td>
+                    </tr>
+                    <tr>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <div>
+                <p>Total: {{ panier.total_prix }} DT</p>
+            </div>
+            <form method="POST" action="{% url 'confirmer_commande' %}">
+                {% csrf_token %}
+                <button type="submit" class="valid" style="background-color: green;">Confirmer la commande</button>
+            </form> <br>
+            <form method="POST" action="{% url 'vider_panier' %}">
+                {% csrf_token %}
+                <button type="submit" style="background-color: red;">Vider le panier</button>
+            </form>
+            {% else %}
+            <p>Votre panier est vide.</p>
+            {% endif %}
+
+        </section>
+    </center><br><br><br><br>
+</main>
+{% endblock %}

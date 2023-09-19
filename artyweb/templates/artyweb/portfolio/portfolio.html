@@ -1,0 +1,114 @@
+{% extends 'artyweb/base.html' %}
+{% block title %} Portfolio {% endblock %}
+{% load static %}
+{% block content %}
+<style>
+  .dep-post .dep-content img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    object-position: center;
+  }
+</style>
+<section>
+  <center>
+    <h1>Notre Portfolio avec les projets réalisés </h1>
+  </center><br>
+  <div class="dep">
+    <div class="container">
+      <div class="row justify-content-between">
+        <div class="col-auto" data-aos="fade-up" data-aos-delay="100">
+          <center>
+            {% if user.is_authenticated and not user.is_staff %}
+            <a href="{% url 'demande_projet' %}">
+              <button class="btn btn-dep">
+                Demander Votre Projet Maintenant !
+              </button>
+            </a>
+            {% endif %}
+          </center>
+        </div>
+        <!---------------------- AJOUTER ------------------------->
+        {% if user.is_authenticated and user.is_superuser %}
+        <div class="col-auto">
+          <center>
+            <a href="{% url 'add_projet' %}" class="btn btn-primary float-end">
+              <button type="submit" class="btn btn-alert">
+                <i class="fa-solid fa-file-circle-plus fa-2xl"></i>
+              </button>
+            </a>
+          </center>
+        </div>
+        {% endif %}
+      </div><br>
+      <div class="owl-carousel owl-theme dep-post">
+        {% for project in list %}
+        <!---------------------- AFFICHER ------------------------->
+        <div class="dep-content" data-aos="fade-right" data-aos-delay="200">
+          <img src="{{project.image.url}}" alt="">
+          <hr>
+          <div class="dep-title">
+            <h3>{{ project.libelle }}</h3>
+            <br>
+            <div class="col-auto" data-aos="fade-up" data-aos-delay="100">
+              <a href="{% url 'detailprojet' project.id %}">
+                <button class="btn btn-dep">
+                  <i class="fa-solid fa-eye fa-xl"></i> Voir detail projets
+                </button>
+              </a>
+            </div>
+            <br>
+            {% if user.is_authenticated and user.is_superuser %}
+            <!---------------------- MODIFIER ------------------------->
+            <div class="col-auto" data-aos="fade-up" data-aos-delay="100">
+              <a href="{% url 'edit_projet' project.id %}" class="btn btn-primary">
+                <button type="submit" class="btn btn-alert">
+                  <i class="fa-solid fa-edit fa-xl"></i></button>
+              </a>
+            </div>
+            <br>
+            <!---------------------- DELETE ------------------------->
+            <div class="col-auto" data-aos="fade-up" data-aos-delay="100">
+              <form method="POST" action="{% url 'delete_projet' project.id %}">
+                {% csrf_token %}
+                <button type="button" class="btn btn-danger" onclick="confirmDelete('{{ project.nom }}', this.form)"><i
+                    class="fa-solid fa-trash fa-xl"></i></button>
+              </form>
+            </div><br>
+            {% endif %}
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+      <div class="owl-navigation">
+        <span class="owl-nav-prev"><i class="fas fa-long-arrow-alt-left"></i></span>
+        <span class="owl-nav-next"><i class="fas fa-long-arrow-alt-right"></i></span>
+      </div>
+    </div>
+  </div>
+</section><br><br>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+  function confirmDelete(nom, form) {
+    Swal.fire({
+      title: 'Êtes-vous sûr?',
+      text: "Vous ne pourrez pas annuler cette action!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Oui, supprimez-le!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        form.submit();
+        Swal.fire(
+          'Supprimé!',
+          'Le service a été supprimé.',
+          'success'
+        )
+      }
+    })
+  }
+</script>
+{% endblock %}

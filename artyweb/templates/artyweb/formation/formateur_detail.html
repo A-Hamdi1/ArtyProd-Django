@@ -1,0 +1,128 @@
+{% extends 'artyweb/base.html' %}
+
+{% block content %}
+<main>
+    <style>
+        .detail-content .card {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+        }
+
+        .detail-content .card img {
+            height: 300px;
+            width: auto;
+            display: inline-block;
+            cursor: zoom-in;
+        }
+
+        .detail-content .card aside {
+            width: 50%;
+            padding: 20px;
+        }
+
+        .detail-content .card aside .title {
+            font-size: 24px;
+            font-weight: bold;
+            margin: 0;
+            text-transform: uppercase;
+        }
+
+        .detail-content .card aside .price {
+            font-size: 24px;
+            font-weight: bold;
+            color: #FFA500;
+            margin: 0;
+        }
+
+        .detail-content .card aside .currency {
+            font-size: 18px;
+            font-weight: bold;
+            color: #FFA500;
+        }
+
+        .detail-content .card aside .num {
+            font-size: 24px;
+            font-weight: bold;
+            color: #FFA500;
+        }
+
+        .detail-content .card aside .item-property {
+            margin-top: 20px;
+        }
+
+        .detail-content .card aside .item-property dt {
+            font-weight: bold;
+        }
+
+        .detail-content .card aside .item-property dd {
+            margin: 0;
+            font-size: 16px;
+            color: #666;
+        }
+
+        .detail-content .card aside .item-property dd:first-child {
+            margin-top: 5px;
+        }
+
+        .detail-content .card aside .param {
+            margin-top: 20px;
+        }
+
+        .detail-content .card aside .param dt {
+            font-weight: bold;
+        }
+
+        .detail-content .card aside .param dd {
+            margin: 0;
+            font-size: 16px;
+            color: #666;
+            text-transform: uppercase;
+        }
+
+        .detail-content .card aside .param dd:first-child {
+            margin-top: 5px;
+        }
+
+        .detail-content .card aside hr {
+            margin-top: 20px;
+            border: 1px solid #DDD;
+        }
+
+        .detail-content .card aside p {
+            font-size: 16px;
+            color: #666;
+            margin-top: 20px;
+        }
+
+        .detail-content .card aside p:first-child {
+            margin-top: 0;
+        }
+    </style>
+    <br><br><br>
+    <section>
+
+        <div class="detail-content">
+            <div class="container">
+                <div class="card">
+                    <aside>
+                        <img src="{{ formateur.photo.url }}">
+                    </aside>
+                    <aside>
+                        <div class="title"> <strong>Name : </strong> {{ formateur.fullname }}</div> <br>
+                        <div class="price">
+                            <span class="currency"><strong>Rating : </strong> {{ formateur.rating }}</span>
+                        </div>
+                        <div class="param">
+                            <dd><strong>Domaine : </strong> {{ formateur.domaine }}</dd>
+                        </div>
+                        <hr>
+                </div>
+    </section>
+</main>
+<br><br><br><br><br><br><br><br><br><br>
+
+
+{% endblock %}

@@ -1,0 +1,152 @@
+{% extends 'artyweb/base.html' %}
+{% block title %} Detail Projet {% endblock %}
+{% load static %}
+{% block content %}
+<!-- ---------------------- Site Content -------------------------->
+<br><br><br><br>
+<style>
+    .detail-content .card {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.3);
+        border-radius: 10px;
+    }
+
+    .detail-content .card img {
+        height: 350px;
+        width: auto;
+        display: inline-block;
+        cursor: zoom-in;
+    }
+
+    .detail-content .card aside {
+        width: 50%;
+        padding: 20px;
+    }
+
+    .detail-content .card aside .title {
+        font-size: 24px;
+        font-weight: bold;
+        margin: 0;
+        text-transform: uppercase;
+    }
+
+    .detail-content .card aside .price {
+        font-size: 24px;
+        font-weight: bold;
+        color: #FFA500;
+        margin: 0;
+    }
+
+    .detail-content .card aside .currency {
+        font-size: 18px;
+        font-weight: bold;
+        color: #FFA500;
+    }
+
+    .detail-content .card aside .num {
+        font-size: 24px;
+        font-weight: bold;
+        color: #FFA500;
+    }
+
+    .detail-content .card aside .item-property {
+        margin-top: 20px;
+    }
+
+    .detail-content .card aside .item-property dt {
+        font-weight: bold;
+    }
+
+    .detail-content .card aside .item-property dd {
+        margin: 0;
+        font-size: 16px;
+        color: #666;
+    }
+
+    .detail-content .card aside .item-property dd:first-child {
+        margin-top: 5px;
+    }
+
+    .detail-content .card aside .param {
+        margin-top: 20px;
+    }
+
+    .detail-content .card aside .param dt {
+        font-weight: bold;
+    }
+
+    .detail-content .card aside .param dd {
+        margin: 0;
+        font-size: 16px;
+        color: #666;
+        text-transform: uppercase;
+    }
+
+    .detail-content .card aside .param dd:first-child {
+        margin-top: 5px;
+    }
+
+    .detail-content .card aside hr {
+        margin-top: 20px;
+        border: 1px solid #DDD;
+    }
+
+    .detail-content .card aside p {
+        font-size: 16px;
+        color: #666;
+        margin-top: 20px;
+    }
+
+    .detail-content .card aside p:first-child {
+        margin-top: 0;
+    }
+</style>
+<section class="container">
+    <div class="detail-content">
+        <div class="container">
+            <div class="card">
+                <aside>
+                    <img src="{{ projet.image.url }}" alt="Image du projet">
+                </aside>
+                <aside>
+                    <div class="title">{{ projet.libelle }}</div> <br>
+                    <div class="price">
+                        {% if projet.acheve %}
+                        <span class="currency">Statut : Terminé</span>
+                        {% else %}
+                        <span class="currency">Statut : En cours</span>
+
+                        {% endif %}
+
+                    </div>
+                    <div class="item-property">
+                        <dt>Description</dt>
+                        <dd>
+                            <p>{{ projet.description }} </p>
+                        </dd>
+                    </div>
+                    <div class="param">
+                        <dt>Date de réalisation</dt>
+                        <dd>{{ projet.date_debut }} - {{ projet.date_fin }}</dd>
+                    </div>
+                    <div class="param">
+                        <dt>Service</dt>
+                        <dd>{{ projet.service }}</dd>
+                    </div>
+                    <div class="param">
+                        <dt>Equipe</dt>
+                        <dd>{{ projet.equipe }}</dd>
+                    </div>
+                    <hr>
+
+            </div>
+</section>
+<br><br><br><br>
+
+<!-- -----------x---------- Site Content -------------x------------>
+
+
+
+{% endblock %}

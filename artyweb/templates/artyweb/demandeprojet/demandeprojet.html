@@ -1,0 +1,84 @@
+{% extends 'artyweb/base.html' %}
+{% block title %} Demande Projet {% endblock %}
+{% load static %}
+{% block content %}
+<br><br>
+
+<section class="section-add-service">
+    <div class="container">
+        <div class="card">
+            <div class="card-header">
+                <h2 class="text-center">Demander Projet</h2>
+            </div>
+            <div class="card-body">
+                <form method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="id_libelle">Libelle :</label><br>
+                        {{ form.libelle }}
+                    </div>
+                    <div class="form-group">
+                        <label for="id_description">Description :</label><br>
+                        {{ form.description }}
+                    </div>
+                    <div class="form-group">
+                        <label for="id_service">Service :</label><br>
+                        {{ form.service }}
+                    </div>
+                 
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary btn-block">Enregistrer</button>
+                    </div>
+                </form>
+            </div>            
+        </div>
+    </div>
+    <br><br>
+</section>
+<style>
+    .section-add-service {
+        min-height: calc(100vh - 200px);
+    }
+
+    .card {
+        max-width: 600px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        margin: 0 auto;
+        background-color: #fff;
+        padding: 20px;
+    }
+
+    .card-header {
+        margin-bottom: 20px;
+    }
+
+    .card-header h2 {
+        font-size: 30px;
+        font-weight: bold;
+        margin: 0;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    label {
+        font-weight: bold;
+        margin-bottom: 5px;
+    }
+
+    input[type="text"],
+    textarea {
+        font-size: 16px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+    }
+
+    textarea {
+        height: 150px;
+    }
+</style>
+
+{% endblock %}

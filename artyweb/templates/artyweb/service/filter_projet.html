@@ -1,0 +1,42 @@
+{% extends 'artyweb/base.html' %}
+{% block title %} Projets {% endblock %}
+{% load static %}
+{% block content %}
+<!--<h3>Projets pour le service :  "{{ service }}" </h3>-->
+<style>
+  .dep-post .dep-content img {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    object-position: center;
+  }
+</style>
+<section>
+  <div class="dep">
+    <div class="container">
+      <div class="owl-carousel owl-theme dep-post">
+        {% for projet in projets %}
+        <div class="dep-content" data-aos="fade-right" data-aos-delay="200">
+          <img src="{{projet.image.url}}" alt="">
+          <hr>
+          <div class="dep-title">
+            <h3>{{ projet.libelle }}</h3>
+            <br><br>
+            <button class="btn btn-dep"><a href="{% url 'projet' projet.pk %}"><i class="fa-solid fa-eye fa-xl"></i> Voir Details </a></button>
+
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+      <div class="owl-navigation">
+        <span class="owl-nav-prev"><i class="fas fa-long-arrow-alt-left"></i></span>
+        <span class="owl-nav-next"><i class="fas fa-long-arrow-alt-right"></i></span>
+      </div>
+    </div>
+  </div>
+</section>
+<br><br><br><br>
+<br><br><br><br><br><br>
+<!-- src="{% static 'img/logo2.png'%}" -->
+
+{% endblock %}
