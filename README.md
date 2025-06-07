@@ -36,7 +36,7 @@ To get a copy of this project up and running on your local machine for developme
 1.  **Clone the repository:**
 
     ```bash
-    git clone https://github.com/YOUR_USERNAME/ArtyProd.git
+    git clone https://github.com/A-Hamdi1/ArtyProd.git
     cd ArtyProd
     ```
 
