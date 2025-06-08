@@ -36,7 +36,7 @@ To get a copy of this project up and running on your local machine for developme
 1.  **Clone the repository:**
 
     ```bash
-    git clone https://github.com/A-Hamdi1/ArtyProd.git
+    git clone https://github.com/A-Hamdi1/ArtyProd-Django.git
     cd ArtyProd
     ```
 
@@ -83,7 +83,7 @@ To get a copy of this project up and running on your local machine for developme
 ## Project Structure
 
 ```
-ArtyProd/
+ArtyProd-Django/
 ├── artyprod/                  # Main Django project configuration
 │   ├── settings.py            # Project settings
 │   ├── urls.py                # Main URL routing
@@ -122,7 +122,3 @@ Contributions are welcome! Please follow these steps to contribute:
 4.  Commit your changes (`git commit -m 'Add some feature'`).
 5.  Push to the branch (`git push origin feature/your-feature-name`).
 6.  Open a Pull Request.
-
-## License
-
-This project is licensed under the MIT License - see the LICENSE.md file for details. (Assuming MIT, you might want to create this file if it doesn't exist) 
